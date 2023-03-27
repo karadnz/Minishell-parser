@@ -5,187 +5,185 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/25 16:24:26 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/25 16:37:40 by mkaraden         ###   ########.fr       */
+/*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
+/*   Updated: 2023/03/28 02:03:27 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-Node	*create_node(NodeType type, const char *value, Node *left, Node *right)
+/*Node	*create_node2(NodeType type, const char *value)
 {
 	Node	*node;
 
 	node = (Node *)malloc(sizeof(Node));
 	node->type = type;
-	node->value = value ? strdup(value) : NULL;
-	node->left = left;
-	node->right = right;
+	node->num_args = 0;
+	node->value = value;
+	node->next = NULL;
+	return (node);
+}*/
+
+Node	*create_node()
+{
+	Node	*node;
+
+	node = (Node *)malloc(sizeof(Node));
+	node->type = NODE_NONE; //
+	node->num_args = 0;
+	node->inf_count = 0;
+	node->out_count = 0;
+	node->value = NULL;
+	node->next = NULL;
 	return (node);
 }
 
-void	free_node(Node *node)
+void print_parser(Node *head)
 {
-	if (node->value)
+	Node *iter = head;
+
+	int i = 0;
+	while(iter != NULL)
 	{
-		free(node->value);
+		printf("Node: %d \n", i);
+		printf("Type: %d \n", iter->type);
+		printf("args: ");
+		for (int i = 0; i < iter->num_args; i++)
+		{
+			printf("%s , ", iter->value[i]);
+		}
+		printf("\n");
+
+		printf("infile: ");
+		for (int i = 0; i < iter->inf_count; i++)
+		{
+			printf("%s , ", iter->infile[i]);
+		}
+		printf("\n");
+
+		printf("outfile: ");
+		for (int i = 0; i < iter->out_count; i++)
+		{
+			printf("%s , ", iter->outfile[i]);
+		}
+		printf("\n\n\n");
+		iter=iter->next;
+		i++;
 	}
-	if (node->left)
-	{
-		free_node(node->left);
-	}
-	if (node->right)
-	{
-		free_node(node->right);
-	}
-	free(node);
 }
 
-Node	*parse_command(const char **input);
-
-Node	*parse_redirect(const char **input)
+Node	*parse_main(const char **input)
 {
-	Token		*token;
-	TokenType	type;
-	Node		*right;
-		NodeType node_type;
+	Node *head;
+	Node *iter;
+	Token *token;
 
+	head = create_node();
+	iter = head;
 	token = next_token(input);
-	type = token->type;
-	free_token(token);
-	if (type == TOKEN_LESS || type == TOKEN_LESS_LESS || type == TOKEN_GREATER
-		|| type == TOKEN_GREATER_GREATER)
+	while (token->type != TOKEN_EOF)
 	{
-		right = parse_command(input);
-		if (!right)
+		
+		//printf("Token type: %d, value: %s\n", token->type, token->value);
+		if (token->type == TOKEN_WORD)
 		{
-			fprintf(stderr, "Error: Missing command after redirection\n");
-			return (NULL);
+			iter->value = (char **)realloc(iter->value, (iter->num_args + 1)
+					* sizeof(char *));
+			iter->value[iter->num_args] = strdup(token->value);
+			iter->num_args++;
 		}
-		switch (type)
+
+		else if (token->type == TOKEN_PIPE)
 		{
-		case TOKEN_LESS:
-			node_type = NODE_REDIRECT_IN;
-			break ;
-		case TOKEN_LESS_LESS:
-			node_type = NODE_REDIRECT_OUT;
-			break ;
-		case TOKEN_GREATER:
-			node_type = NODE_REDIRECT_APPEND;
-			break ;
-		case TOKEN_GREATER_GREATER:
-			node_type = NODE_REDIRECT_OUT;
-			break ;
-		default:
-			fprintf(stderr, "Error: Unknown redirection type\n");
-			return (NULL);
+			//iter->type = NODE_PIPE; ***
+			iter->next = create_node();
+			iter = iter->next;
 		}
-		return (create_node(node_type, NULL, NULL, right));
+
+		else if (token->type == TOKEN_GREATER)
+		{
+			iter->type = NODE_REDIRECT_OUT;
+			token = next_token(input);
+			if (token->type == TOKEN_WORD)
+			{
+				iter->outfile = (char **)realloc(iter->outfile, (iter->out_count+ 1)
+					* sizeof(char *));
+				iter->outfile[iter->out_count] = strdup(token->value); //gordugun yerde olustur
+				iter->out_count++;
+			 
+			}
+			else
+			{
+				fprintf(stderr, "Error: Missing file for output redirection\n");
+				//free_token(token);
+				//free_command(head);
+				return (NULL);
+			}
+		}
+		else if (token->type == TOKEN_GREATER_GREATER)
+		{
+			iter->type = NODE_REDIRECT_APPEND;
+			token = next_token(input);
+			if (token->type == TOKEN_WORD) //gordugun yerde olustur
+			{
+				iter->outfile = (char **)realloc(iter->outfile, (iter->out_count+ 1)
+					* sizeof(char *));
+				iter->outfile[iter->out_count] = strdup(token->value); //gordugun yerde olustur
+				iter->out_count++;
+			}
+			else
+			{
+				fprintf(stderr, "Error: Missing file for output redirection\n");
+				//free_token(token);
+				//free_command(head);
+				return (NULL);
+			}
+		}
+
+		else if (token->type == TOKEN_LESS)
+		{
+			iter->type = NODE_REDIRECT_IN;
+			token = next_token(input);
+			if (token->type == TOKEN_WORD)
+			{
+				iter->infile = (char **)realloc(iter->infile, (iter->inf_count+ 1)
+					* sizeof(char *));
+				iter->infile[iter->inf_count] = strdup(token->value); //gordugun okumaya calis
+				iter->inf_count++; 
+			}
+			else
+			{
+				fprintf(stderr, "Error: Missing file for input redirection\n");
+				//free_token(token);
+				//free_command(head);
+				return (NULL);
+			}
+			
+		}
+
+		else if (token->type == TOKEN_LESS_LESS)
+		{
+			iter->type = NODE_REDIRECT_HEREDOC;
+			token = next_token(input);
+			if (token->type == TOKEN_WORD)
+			{				
+				iter->infile = (char **)realloc(iter->infile, (iter->inf_count+ 1)
+					* sizeof(char *));
+				iter->infile[iter->inf_count] = strdup(token->value); //gordugun okumaya calis
+				iter->inf_count++; 
+			}
+			else
+			{
+				fprintf(stderr, "Error: Missing file for input redirection\n");
+				//free_token(token);
+				//free_command(head);
+				return (NULL);
+			}
+			
+		}
+		token = next_token(input);
 	}
-	return (NULL);
-}
 
-Node *parse_command(const char **input) {
-    Token *token = next_token(input);
-    Node *head = NULL;
-    Node *tail = NULL;
+	return (head);
 
-    while (token->type == TOKEN_WORD) {
-        Node *command = create_node(NODE_COMMAND, token->value, NULL, NULL);
-
-        if (head == NULL) {
-            head = command;
-            tail = command;
-        } else {
-            tail->right = command;
-            tail = command;
-        }
-
-        free_token(token);
-        token = next_token(input);
-    }
-
-    *input -= strlen(token->value); // Move input back to the unprocessed part
-    free_token(token);
-
-    return head;
-}
-
-Node *parse_pipe(const char **input) {
-    Node *left = parse_command(input);
-
-    if (!left) {
-        return NULL;
-    }
-
-    Token *token = next_token(input);
-
-    if (token->type == TOKEN_PIPE) {
-        free_token(token);
-        Node *right = parse_pipe(input);
-
-        if (!right) {
-            fprintf(stderr, "Error: Missing command after pipe\n");
-            free_node(left);
-            return NULL;
-        }
-
-        return create_node(NODE_PIPE, NULL, left, right);
-    } else if (token->type == TOKEN_LESS || token->type == TOKEN_LESS_LESS ||
-               token->type == TOKEN_GREATER || token->type == TOKEN_GREATER_GREATER) {
-        NodeType node_type;
-
-        switch (token->type) {
-            case TOKEN_LESS:
-                node_type = NODE_REDIRECT_IN;
-                break;
-            case TOKEN_LESS_LESS:
-                node_type = NODE_REDIRECT_OUT;
-                break;
-            case TOKEN_GREATER:
-                node_type = NODE_REDIRECT_APPEND;
-                break;
-            case TOKEN_GREATER_GREATER:
-                node_type = NODE_REDIRECT_OUT;
-                break;
-            default:
-                fprintf(stderr, "Error: Unknown redirection type\n");
-                return NULL;
-        }
-
-        free_token(token);
-        Node *right = parse_command(input);
-
-        if (!right) {
-            fprintf(stderr, "Error: Missing command after redirection\n");
-            free_node(left);
-            return NULL;
-        }
-
-        Node *redirect_node = create_node(node_type, NULL, left, right);
-        return redirect_node;
-    } else {
-        free_token(token);
-    }
-
-    return left;
-}
-
-Node	*parse(const char *input)
-{
-	return (parse_pipe(&input));
-}
-
-void	print_ast(Node *node, int depth)
-{
-	if (node)
-	{
-		for (int i = 0; i < depth; i++)
-		{
-			printf("  ");
-		}
-		printf("Node type: %d, value: %s\n", node->type, node->value);
-		print_ast(node->left, depth + 1);
-		print_ast(node->right, depth + 1);
-	}
 }

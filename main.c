@@ -6,17 +6,27 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:09:19 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/25 16:33:46 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/03/28 01:45:36 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-int main()
+
+int main(int argc, char **argv)
 {
-    const char *input = "ls -l | grep \"txt\" > output.txt";
-	//const char *input = "ls -l";
+    Node *head = parse_main(&argv[1]);
+
+	print_parser(head);
+
+    return 0;
+}
+
+/*int main2()
+{
+    //const char *input = "ls -l | grep txt > output.txt";
+	const char *input = "cat << infile | ls -l | wc -l | > outfile";
     Node *ast = parse(input);
     if (ast) {
         printf("AST for command: %s\n", input);
@@ -27,7 +37,7 @@ int main()
     }
     return 0;
 }
-int main2(int argc, char **argv)
+int main3(int argc, char **argv)
 {
     Token *token;
     do
@@ -38,4 +48,4 @@ int main2(int argc, char **argv)
     } while (token->type != TOKEN_EOF);
 
     return 0;
-}
+}*/

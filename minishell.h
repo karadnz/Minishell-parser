@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/25 16:24:02 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/03/28 01:51:39 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct
 {
 	TokenType	type;
 	char		*value;
+	//Token		*next;
 }				Token;
 
 Token			*create_token(TokenType type, const char *value);
@@ -49,28 +50,40 @@ Token			*next_token(const char **input);
 //PARSER
 typedef enum
 {
+	NODE_NONE, //**
 	NODE_COMMAND,
 	NODE_PIPE,
 	NODE_REDIRECT_IN,
 	NODE_REDIRECT_OUT,
-	NODE_REDIRECT_APPEND
+	NODE_REDIRECT_APPEND,
+	NODE_REDIRECT_HEREDOC
 }				NodeType;
 
 typedef struct Node
 {
 	NodeType	type;
-	char		*value;
-	struct Node	*left;
-	struct Node	*right;
+	char		**value;
+	int			num_args;
+	struct Node	*next;
+	char		**infile;
+	int			inf_count;
+	char		**outfile;
+	int			out_count;
 }				Node;
 
-Node			*create_node(NodeType type, const char *value, Node *left,
-					Node *right);
+Node			*create_node2(NodeType type, const char *value);
+Node			*create_node();
 void			free_node(Node *node);
+
+void print_parser(Node *head);
+
+
 Node			*parse_command(const char **input);
 Node			*parse_redirect(const char **input);
 Node			*parse_pipe(const char **input);
 Node			*parse(const char *input);
 void			print_ast(Node *node, int depth);
+
+Node	*parse_main(const char **input);
 
 #endif
