@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/28 01:51:39 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/03/28 06:16:53 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 //LEXER
 
@@ -85,5 +87,10 @@ Node			*parse(const char *input);
 void			print_ast(Node *node, int depth);
 
 Node	*parse_main(const char **input);
+
+//PROMPT
+
+void	print_prompt();
+int takeInput(char** str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/28 02:03:27 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/03/28 06:31:06 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ Node	*create_node()
 	node->inf_count = 0;
 	node->out_count = 0;
 	node->value = NULL;
+	node->outfile = NULL;
+	node->infile = NULL;
 	node->next = NULL;
 	return (node);
 }
