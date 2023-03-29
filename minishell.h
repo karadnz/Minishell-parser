@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/28 06:16:53 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:51:41 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct
 {
 	TokenType	type;
 	char		*value;
-	//Token		*next;
 }				Token;
 
 Token			*create_token(TokenType type, const char *value);
@@ -77,7 +76,7 @@ Node			*create_node2(NodeType type, const char *value);
 Node			*create_node();
 void			free_node(Node *node);
 
-void print_parser(Node *head);
+void			print_parser(Node *head);
 
 
 Node			*parse_command(const char **input);
@@ -91,6 +90,6 @@ Node	*parse_main(const char **input);
 //PROMPT
 
 void	print_prompt();
-int takeInput(char** str);
+int		takeInput(char** str);
 
 #endif

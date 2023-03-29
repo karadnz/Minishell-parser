@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:08:53 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/28 06:19:03 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:00:02 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ Token	*create_token(TokenType type, const char *value)
 
 	token = (Token *)malloc(sizeof(Token));
 	token->type = type;
-	token->value = value ? strdup(value) : NULL;
+	token->value = NULL;
+	if (value != NULL)
+		token->value = strdup(value);
+	//token->value = value ? strdup(value) : NULL;
 	return (token);
 }
 
 void	free_token(Token *token)
 {
 	if (token->value)
-	{
 		free(token->value);
-	}
 	free(token);
 }
 
