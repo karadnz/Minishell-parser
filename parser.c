@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/28 06:31:06 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:35:00 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ Node	*create_node()
 	node->num_args = 0;
 	node->inf_count = 0;
 	node->out_count = 0;
-	node->value = NULL;
+	node->args = NULL;
 	node->outfile = NULL;
 	node->infile = NULL;
 	node->next = NULL;
@@ -52,7 +52,7 @@ void print_parser(Node *head)
 		printf("args: ");
 		for (int i = 0; i < iter->num_args; i++)
 		{
-			printf("%s , ", iter->value[i]);
+			printf("%s , ", iter->args[i]);
 		}
 		printf("\n");
 
@@ -86,12 +86,12 @@ Node	*parse_main(const char **input)
 	while (token->type != TOKEN_EOF)
 	{
 		
-		//printf("Token type: %d, value: %s\n", token->type, token->value);
+		//printf("Token type: %d, args: %s\n", token->type, token->value);
 		if (token->type == TOKEN_WORD)
 		{
-			iter->value = (char **)realloc(iter->value, (iter->num_args + 1)
+			iter->args = (char **)realloc(iter->args, (iter->num_args + 1)
 					* sizeof(char *));
-			iter->value[iter->num_args] = strdup(token->value);
+			iter->args[iter->num_args] = strdup(token->value);
 			iter->num_args++;
 		}
 

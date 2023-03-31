@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/29 14:51:41 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:33:51 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,21 @@ typedef enum
 typedef struct Node
 {
 	NodeType	type;
-	char		**value;
+	
+	char		**args;
 	int			num_args;
-	struct Node	*next;
+	
+	
 	char		**infile;
-	int			inf_count;
 	char		**outfile;
+	
+	int			inf_count;
 	int			out_count;
+
+	struct Node	*next;
 }				Node;
 
-Node			*create_node2(NodeType type, const char *value);
+Node			*create_node2(NodeType type, const char *args);
 Node			*create_node();
 void			free_node(Node *node);
 
@@ -87,9 +92,33 @@ void			print_ast(Node *node, int depth);
 
 Node	*parse_main(const char **input);
 
+//EXPANDER
+
 //PROMPT
 
 void	print_prompt();
 int		takeInput(char** str);
+
+//ENV
+
+typedef struct env_node
+{
+	char *key;
+	char *value;
+	struct env_node *next;
+} EnvNode;
+
+EnvNode	*create_env_node(const char *key, const char *value);
+void	add_env_node(EnvNode **head, const char *key, const char *value);
+void	delete_env_node(EnvNode **head, const char *key);
+void	update_env_node(EnvNode *head, const char *key, const char *new_value);
+EnvNode	*load_environment(char *envp[]);
+void	free_list(EnvNode *head);
+void	print_list(EnvNode *head);
+
+
+
+
+
 
 #endif

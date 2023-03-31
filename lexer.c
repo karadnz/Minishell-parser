@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:08:53 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/29 15:00:02 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:54:12 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*read_word(const char **input)
 	char		*word;
 
 	start = *input;
-	while (**input && !strchr("<>|'\"", **input) && !isspace(**input))
+	while (**input && !strchr("<>|", **input) && !isspace(**input)) //!strchr("<>|'\"", **input)
 	{
 		(*input)++;
 	}
@@ -50,8 +50,38 @@ char	*read_word(const char **input)
 	return (word);
 }
 
+char	*read_quote_word(const char **input, char quote)
+{
+	const char	*start;
+	size_t		length;
+	char		*word;
+
+	start = *input;
+	while (**input && (**input != quote)) //BITMEDIGI ZAMANA BAK
+	{
+		if (!**input)
+		{
+			printf("invalid quote");
+			exit(1);
+		}
+		(*input)++;
+	}
+	
+	length = *input - (start--);
+	length += 2;
+	if(**input == quote)
+		(*input)++; //SON GORDUGU " I GECMESI ICIN BITMEDIGI ZAMANA BAK
+	word = (char *)malloc(length + 1);
+	strncpy(word, start, length);
+	word[length] = '\0';
+	return (word);
+}
+
 Token	*next_token(const char **input)
 {
+	char	*word;
+	Token	*token;
+	
 	while (isspace(**input))
 	{
 		(*input)++;
@@ -83,19 +113,27 @@ Token	*next_token(const char **input)
 			return (create_token(TOKEN_GREATER_GREATER, ">>"));
 		}
 		return (create_token(TOKEN_GREATER, ">"));
-	case '"':
+	/*case '"':
 		(*input)++;
-		return (create_token(TOKEN_DOUBLE_QUOTE, "\""));
+		word = read_quote_word(input, '"');
+		token = create_token(TOKEN_WORD, word);
+		free(word);
+		return (token);
+		//return (create_token(TOKEN_DOUBLE_QUOTE, "\""));
 	case '\'':
 		(*input)++;
-		return (create_token(TOKEN_SINGLE_QUOTE, "'"));
+		word = read_quote_word(input, '\'');
+		token = create_token(TOKEN_WORD, word);
+		free(word);
+		return (token);
+		//return (create_token(TOKEN_SINGLE_QUOTE, "'"));*/
 	case '$':
 		(*input)++;
 		return (create_token(TOKEN_ENV_VAR, "$"));
 	default:
 	{
-		char *word = read_word(input);
-		Token *token = create_token(TOKEN_WORD, word);
+		word = read_word(input);
+		token = create_token(TOKEN_WORD, word);
 		free(word);
 		return (token);
 	}

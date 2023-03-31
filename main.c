@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:09:19 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/28 06:14:13 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/03/31 15:52:58 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,31 @@
 
 
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **envp)
 {
+
+	EnvNode *env_list = load_environment(envp);
+
+	printf("Original environment variables:\n");
+	print_list(env_list);
     
 	char *input;
+
+	//return (0);
 
 	while(1)
 	{
 		print_prompt();
 		if (takeInput(&input))
+		{
+			printf("\n\nOriginal environment variables:\n");
+			print_list(env_list);
+			printf("\n\n\n\n\n");
+
 			continue;
+		}
+
+
 		Node *head = parse_main((const char **)&input);
 		print_parser(head);
 	}
