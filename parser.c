@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 19:23:27 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:43:56 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ Node	*parse_main(const char **input)
 			iter = iter->next;
 		}
 
-		else if (token->type == TOKEN_GREATER)
+		else if (token->type == TOKEN_O)
 		{
 			iter->type = NODE_REDIRECT_OUT;
 			token = get_next_token(input);
@@ -141,7 +141,7 @@ Node	*parse_main(const char **input)
 				return (NULL);
 			}
 		}
-		else if (token->type == TOKEN_GREATER_GREATER)
+		else if (token->type == TOKEN_O_O)
 		{
 			iter->type = NODE_REDIRECT_APPEND;
 			token = get_next_token(input);
@@ -161,7 +161,7 @@ Node	*parse_main(const char **input)
 			}
 		}
 
-		else if (token->type == TOKEN_LESS)
+		else if (token->type == TOKEN_I)
 		{
 			iter->type = NODE_REDIRECT_IN;
 			token = get_next_token(input);
@@ -182,7 +182,7 @@ Node	*parse_main(const char **input)
 			
 		}
 
-		else if (token->type == TOKEN_LESS_LESS)
+		else if (token->type == TOKEN_I_I)
 		{
 			iter->type = NODE_REDIRECT_HEREDOC;
 			token = get_next_token(input);

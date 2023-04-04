@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:08:53 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 21:28:03 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:49:52 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 Token	*get_next_token(const char **input)
 {
-	char	*word;
-	Token	*token;
-
 	while (isspace(**input))
 	{
 		(*input)++;
@@ -52,13 +49,10 @@ Token	*generate_word_token(const char **input)
 
 Token	*generate_pr_token(const char **input)
 {
-	const char	*start;
-
-	start = *input;
 	if (**input == '|')
 	{
 		(*input)++;
-		return (create_token(TOKEN_PIPE, input, start));
+		return (create_token(TOKEN_PIPE, input, (*input) - 1));
 	}
 	if (**input == '<')
 	{
@@ -66,9 +60,9 @@ Token	*generate_pr_token(const char **input)
 		if (**input == '<')
 		{
 			(*input)++;
-			return (create_token(TOKEN_LESS_LESS, input, start));
+			return (create_token(TOKEN_I_I, input, (*input) - 1));
 		}
-		return (create_token(TOKEN_LESS, input, start));
+		return (create_token(TOKEN_I, input, (*input) - 1));
 	}
 	if (**input == '>')
 	{
@@ -76,9 +70,9 @@ Token	*generate_pr_token(const char **input)
 		if (**input == '>')
 		{
 			(*input)++;
-			return (create_token(TOKEN_GREATER_GREATER, input, start));
+			return (create_token(TOKEN_O_O, input, (*input) - 1));
 		}
-		return (create_token(TOKEN_GREATER, input, start));
+		return (create_token(TOKEN_O, input, (*input) - 1));
 	}
 }
 

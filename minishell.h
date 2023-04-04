@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 21:29:42 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:44:10 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,13 @@
 //---------LEXER-------------------------------------------//
 
 
-typedef enum //delete quote
+typedef enum 
 {
 	TOKEN_PIPE,
-	TOKEN_LESS,
-	TOKEN_LESS_LESS,
-	TOKEN_GREATER,
-	TOKEN_GREATER_GREATER,
-	TOKEN_DOUBLE_QUOTE,
-	TOKEN_SINGLE_QUOTE,
-	TOKEN_ENV_VAR,
+	TOKEN_I,
+	TOKEN_O,
+	TOKEN_I_I,
+	TOKEN_O_O,
 	TOKEN_WORD,
 	TOKEN_EOF
 }				TokenType;
@@ -53,6 +50,12 @@ Token	*create_token(TokenType type, const char **input, const char *start);
 void	free_token(Token *token);
 
 ///////////////////////////////////////////////////////////////
+
+/*
+	TOKEN_DOUBLE_QUOTE,
+	TOKEN_SINGLE_QUOTE,
+	TOKEN_ENV_VAR,
+*/
 
 
 //---------PARSER-------------------------------------------//
