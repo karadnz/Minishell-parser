@@ -6,47 +6,36 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:09:19 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 23:18:28 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 02:39:14 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
-
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
+	Node	*head;
+	char	*input;
 
 	env_list = load_environment(envp);
-
 	printf("Original environment variables:\n");
 	print_list(env_list);
-    
-	char *input;
-
-	//return (0);
-
-	while(1)
+	while (1)
 	{
 		print_prompt();
-		if (takeInput(&input))
+		if (take_input(&input))
 		{
 			printf("\n\nOriginal environment variables:\n");
 			print_list(env_list);
 			printf("\n\n\n\n\n");
-
-			continue;
+			continue ;
 		}
-
-
-		Node *head = get_parsed((const char **)&input);
+		head = get_parsed((const char **)&input);
 		print_parser(head);
 		expand_parsed_nodes(head);
 		print_parser(head);
 	}
-
-    return 0;
+	return (0);
 }
 
 /*int main2()
