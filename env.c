@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:49:54 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 17:05:42 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:30:04 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,21 @@ EnvNode *find_env_node(EnvNode *head, const char *key)
 		}
 		current = current->next;
 	}
+
+	return NULL;
+}
+
+char	*get_env_val(const char *key)
+{
+	EnvNode *current = find_env_node(env_list, key);
+	if (!current)
+	{
+		printf("ENV VALUE DOESNT EXIST FOR KEY: %s", key);
+		return NULL;
+	}
+	return current->value;
+
+
 
 	return NULL;
 }
@@ -215,11 +230,11 @@ void	printDoubleArr(char **arr)
 	return 0;
 }*/
 
-int main(int argc, char *argv[], char *envp[])
+/*int main(int argc, char *argv[], char *envp[])
 {
 	EnvNode *env_list = load_environment(envp);
 
-	/*printf("Original environment variables:\n");
+	printf("Original environment variables:\n");
 	print_list(env_list);
 
 	// Add a new variable
@@ -235,7 +250,7 @@ int main(int argc, char *argv[], char *envp[])
 	// Delete a variable
 	delete_env_node (&env_list, "NEW_VARIABLE");
 	printf("\nAfter deleting NEW_VARIABLE:\n");
-	print_list(env_list);*/
+	print_list(env_list);
 
 	char **ar =get_env_arr(env_list);
 	printf("HIT \n\n\n");
@@ -243,5 +258,5 @@ int main(int argc, char *argv[], char *envp[])
 
 	free_list(env_list);
 	return 0;
-}
+}*/
 

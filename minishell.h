@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 16:27:01 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:32:59 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void			free_node(Node *node);
 
 void			print_parser(Node *head);
 
-
+void			expand_parsed_nodes(Node *head);
 Node			*parse_command(const char **input);
 Node			*parse_redirect(const char **input);
 Node			*parse_pipe(const char **input);
@@ -93,6 +93,10 @@ void			print_ast(Node *node, int depth);
 Node	*parse_main(const char **input);
 
 //EXPANDER
+
+
+char *get_expanded(const char *input);
+
 
 //PROMPT
 
@@ -108,12 +112,16 @@ typedef struct env_node
 	struct env_node *next;
 } EnvNode;
 
+EnvNode *env_list; //GLOBAL
+
 EnvNode	*load_environment(char *envp[]);	//Basta calisacak
 char	**get_env_arr(EnvNode *head);		//guncel nodeleri **arr olarak dondurur.
 
 void	add_env_node(EnvNode **head, const char *key, const char *value);
 void	update_env_node(EnvNode *head, const char *key, const char *new_value);
 void	delete_env_node(EnvNode **head, const char *key);
+char	*get_env_val(const char *key);
+EnvNode	*find_env_node(EnvNode *head, const char *key);
 
 EnvNode *create_env_node(const char *key, const char *value);
 void	free_list(EnvNode *head);

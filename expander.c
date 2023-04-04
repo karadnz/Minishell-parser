@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:29:45 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/31 20:36:09 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:27:07 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ char *get_expanded(const char *input)
 			strncpy(var_name, input + var_start, var_len);
 			var_name[var_len] = '\0';
 
-			char *var_value = getenv(var_name);
+			//char *var_value = getenv(var_name);
+			char *var_value = get_env_val(var_name);
 			if (var_value)
 			{
 				size_t var_value_len = strlen(var_value);
@@ -78,7 +79,7 @@ char *get_expanded(const char *input)
 	return expanded;
 }
 
-int main()
+/*int main()
 {
 	char input[] = "    \'\"\'\"l\"=l\"yunus--> $PWD\"\'\"\'  ";
 	char *expanded = get_expanded(input);
@@ -86,4 +87,4 @@ int main()
 	printf("Expanded string: %s\n", expanded);
 	free(expanded);
 	return 0;
-}
+}*/

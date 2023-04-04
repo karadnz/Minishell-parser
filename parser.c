@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/31 16:35:00 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:32:06 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,30 @@ void print_parser(Node *head)
 			printf("%s , ", iter->outfile[i]);
 		}
 		printf("\n\n\n");
+		iter=iter->next;
+		i++;
+	}
+}
+
+void expand_parsed_nodes(Node *head)
+{
+	Node *iter = head;
+
+	int i = 0;
+	while(iter != NULL)
+	{
+		for (int i = 0; i < iter->num_args; i++)
+		{
+			iter->args[i] = get_expanded(iter->args[i]);
+		}
+		for (int i = 0; i < iter->inf_count; i++)
+		{
+			iter->infile[i] = get_expanded(iter->infile[i]);
+		}
+		for (int i = 0; i < iter->out_count; i++)
+		{
+			iter->outfile[i] = get_expanded(iter->outfile[i]);
+		}
 		iter=iter->next;
 		i++;
 	}

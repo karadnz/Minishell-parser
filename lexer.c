@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:08:53 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/31 16:54:12 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:36:32 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ Token	*next_token(const char **input)
 			return (create_token(TOKEN_GREATER_GREATER, ">>"));
 		}
 		return (create_token(TOKEN_GREATER, ">"));
-	/*case '"':
+	case '"':
 		(*input)++;
 		word = read_quote_word(input, '"');
 		token = create_token(TOKEN_WORD, word);
@@ -127,9 +127,9 @@ Token	*next_token(const char **input)
 		free(word);
 		return (token);
 		//return (create_token(TOKEN_SINGLE_QUOTE, "'"));*/
-	case '$':
+	/*case '$':
 		(*input)++;
-		return (create_token(TOKEN_ENV_VAR, "$"));
+		return (create_token(TOKEN_ENV_VAR, "$"));*/
 	default:
 	{
 		word = read_word(input);
