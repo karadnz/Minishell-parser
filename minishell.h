@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 21:44:10 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 23:29:55 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,10 @@ void	free_token(Token *token);
 
 
 //---------PARSER-------------------------------------------//
-typedef enum
-{
-	NODE_NONE, //**
-	NODE_COMMAND,
-	NODE_PIPE,
-	NODE_REDIRECT_IN,
-	NODE_REDIRECT_OUT,
-	NODE_REDIRECT_APPEND,
-	NODE_REDIRECT_HEREDOC
-}				NodeType;
-
 typedef struct Node
 {
-	NodeType	type;
-	
 	char		**args;
-	int			num_args;
+	int			arg_count;
 	
 	
 	char		**infile;
@@ -87,20 +74,18 @@ typedef struct Node
 	struct Node	*next;
 }				Node;
 
-Node			*create_node2(NodeType type, const char *args);
+
+Node			*get_parsed(const char **input);
+
+void			parse_word(Node *iter, Token *token);
+void			parse_input(Node *iter, Token *token, const char **input);
+void			parse_output(Node *iter, Token *token, const char **input);
+
 Node			*create_node();
-void			free_node(Node *node);
-
 void			print_parser(Node *head);
-
 void			expand_parsed_nodes(Node *head);
-Node			*parse_command(const char **input);
-Node			*parse_redirect(const char **input);
-Node			*parse_pipe(const char **input);
-Node			*parse(const char *input);
-void			print_ast(Node *node, int depth);
 
-Node	*parse_main(const char **input);
+
 
 ///////////////////////////////////////////////////////////////
 
@@ -138,6 +123,12 @@ EnvNode	*find_env_node(EnvNode *head, const char *key);
 EnvNode *create_env_node(const char *key, const char *value);
 void	free_list(EnvNode *head);
 void	print_list(EnvNode *head);
+
+
+//utils
+
+void *ft_realloc(void *ptr, size_t old_size, size_t new_size); //duzelt
+void printDoubleArr(char **arr);
 
 
 

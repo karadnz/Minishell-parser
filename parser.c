@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 21:43:56 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 23:28:44 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ Node	*create_node()
 	Node	*node;
 
 	node = (Node *)malloc(sizeof(Node));
-	node->type = NODE_NONE; //
-	node->num_args = 0;
+	node->arg_count = 0;
 	node->inf_count = 0;
 	node->out_count = 0;
 	node->args = NULL;
@@ -28,6 +27,73 @@ Node	*create_node()
 	return (node);
 }
 
+Node	*get_parsed(const char **input)
+{
+	Node	*head;
+	Node	*iter;
+	Token	*token;
+	
+	head = create_node();
+	iter = head;
+	token = get_next_token(input);
+	while (token->type != TOKEN_EOF)
+	{
+		
+		if (token->type == TOKEN_PIPE)
+		{
+			iter->next = create_node();
+			iter = iter->next;
+		}
+		else if (token->type == TOKEN_WORD)
+			parse_word(iter, token);
+		else if (token->type == TOKEN_I || TOKEN_I_I)
+			parse_input(iter, token, input);
+		else if (token->type == TOKEN_O || TOKEN_O_O)
+			parse_output(iter, token, input);
+		token = get_next_token(input);
+		
+	}
+	iter->next = NULL;
+	return (head);
+}
+
+void	parse_word(Node *iter, Token *token)
+{
+	iter->args = (char **)realloc(iter->args, (iter->arg_count + 1)* sizeof(char *));
+	iter->args[iter->arg_count] = strdup(token->value);
+	iter->arg_count++;
+}
+
+void	parse_input(Node *iter, Token *token, const char **input)
+{
+	token = get_next_token(input);
+	if (token->type == TOKEN_WORD)
+	{
+		iter->infile = (char **)realloc(iter->infile, (iter->inf_count+ 1)* sizeof(char *));
+		iter->infile[iter->inf_count] = strdup(token->value); //gordugun okumaya calis
+		iter->inf_count++; 
+	}
+	else
+	{
+		printf("INVALID SYNTAX \n");
+	}
+}
+
+void	parse_output(Node *iter, Token *token, const char **input)
+{
+	token = get_next_token(input);
+	if (token->type == TOKEN_WORD)
+	{
+		iter->outfile = (char **)realloc(iter->outfile, (iter->out_count+ 1)* sizeof(char *));
+		iter->outfile[iter->out_count] = strdup(token->value); //gordugun okumaya calis
+		iter->out_count++; 
+	}
+	else
+	{
+		printf("INVALID SYNTAX \n");
+	}
+}
+
 void print_parser(Node *head)
 {
 	Node *iter = head;
@@ -35,28 +101,36 @@ void print_parser(Node *head)
 	int i = 0;
 	while(iter != NULL)
 	{
+		//printf("p\n\n");
 		printf("Node: %d \n", i);
-		printf("Type: %d \n", iter->type);
+		//printf("Type: %d \n", iter->type);
 		printf("args: ");
-		for (int i = 0; i < iter->num_args; i++)
+		//printf("p\n\n");
+		for (int i = 0; i < iter->arg_count; i++)
 		{
 			printf("%s , ", iter->args[i]);
+			//printf("p\n\n");
 		}
 		printf("\n");
 
 		printf("infile: ");
+		//printf("p\n\n");
 		for (int i = 0; i < iter->inf_count; i++)
 		{
 			printf("%s , ", iter->infile[i]);
+			//printf("p\n\n");
 		}
 		printf("\n");
 
 		printf("outfile: ");
+		//printf("p\n\n");
 		for (int i = 0; i < iter->out_count; i++)
 		{
 			printf("%s , ", iter->outfile[i]);
+			//printf("p\n\n");
 		}
 		printf("\n\n\n");
+		//printf("p\n\n");
 		iter=iter->next;
 		i++;
 	}
@@ -72,7 +146,7 @@ void expand_parsed_nodes(Node *head)
 	while(iter != NULL)
 	{
 		i = 0;
-		while (i < iter->num_args)
+		while (i < iter->arg_count)
 		{
 			iter->args[i] = get_expanded(iter->args[i]);
 			i++;
@@ -91,120 +165,4 @@ void expand_parsed_nodes(Node *head)
 		}
 		iter=iter->next;
 	}
-}
-
-Node	*parse_main(const char **input)
-{
-	Node *head;
-	Node *iter;
-	Token *token;
-
-	head = create_node();
-	iter = head;
-	token = get_next_token(input);
-	while (token->type != TOKEN_EOF)
-	{
-		
-		//printf("Token type: %d, args: %s\n", token->type, token->value);
-		if (token->type == TOKEN_WORD)
-		{
-			iter->args = (char **)realloc(iter->args, (iter->num_args + 1)
-					* sizeof(char *));
-			iter->args[iter->num_args] = strdup(token->value);
-			iter->num_args++;
-		}
-
-		else if (token->type == TOKEN_PIPE)
-		{
-			//iter->type = NODE_PIPE; ***
-			iter->next = create_node();
-			iter = iter->next;
-		}
-
-		else if (token->type == TOKEN_O)
-		{
-			iter->type = NODE_REDIRECT_OUT;
-			token = get_next_token(input);
-			if (token->type == TOKEN_WORD)
-			{
-				iter->outfile = (char **)realloc(iter->outfile, (iter->out_count+ 1)
-					* sizeof(char *));
-				iter->outfile[iter->out_count] = strdup(token->value); //gordugun yerde olustur
-				iter->out_count++;
-			 
-			}
-			else
-			{
-				fprintf(stderr, "Error: Missing file for output redirection\n");
-				//free_token(token);
-				//free_command(head);
-				return (NULL);
-			}
-		}
-		else if (token->type == TOKEN_O_O)
-		{
-			iter->type = NODE_REDIRECT_APPEND;
-			token = get_next_token(input);
-			if (token->type == TOKEN_WORD) //gordugun yerde olustur
-			{
-				iter->outfile = (char **)realloc(iter->outfile, (iter->out_count+ 1)
-					* sizeof(char *));
-				iter->outfile[iter->out_count] = strdup(token->value); //gordugun yerde olustur
-				iter->out_count++;
-			}
-			else
-			{
-				fprintf(stderr, "Error: Missing file for output redirection\n");
-				//free_token(token);
-				//free_command(head);
-				return (NULL);
-			}
-		}
-
-		else if (token->type == TOKEN_I)
-		{
-			iter->type = NODE_REDIRECT_IN;
-			token = get_next_token(input);
-			if (token->type == TOKEN_WORD)
-			{
-				iter->infile = (char **)realloc(iter->infile, (iter->inf_count+ 1)
-					* sizeof(char *));
-				iter->infile[iter->inf_count] = strdup(token->value); //gordugun okumaya calis
-				iter->inf_count++; 
-			}
-			else
-			{
-				fprintf(stderr, "Error: Missing file for input redirection\n");
-				//free_token(token);
-				//free_command(head);
-				return (NULL);
-			}
-			
-		}
-
-		else if (token->type == TOKEN_I_I)
-		{
-			iter->type = NODE_REDIRECT_HEREDOC;
-			token = get_next_token(input);
-			if (token->type == TOKEN_WORD)
-			{				
-				iter->infile = (char **)realloc(iter->infile, (iter->inf_count+ 1)
-					* sizeof(char *));
-				iter->infile[iter->inf_count] = strdup(token->value); //gordugun okumaya calis
-				iter->inf_count++; 
-			}
-			else
-			{
-				fprintf(stderr, "Error: Missing file for input redirection\n");
-				//free_token(token);
-				//free_command(head);
-				return (NULL);
-			}
-			
-		}
-		token = get_next_token(input);
-	}
-
-	return (head);
-
 }

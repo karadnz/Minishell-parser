@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:09:19 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 17:32:37 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 23:18:28 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int main(int argc, char **argv, char **envp)
 		}
 
 
-		Node *head = parse_main((const char **)&input);
+		Node *head = get_parsed((const char **)&input);
 		print_parser(head);
 		expand_parsed_nodes(head);
 		print_parser(head);
