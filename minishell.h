@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/31 16:33:51 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:27:01 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,16 @@ typedef struct env_node
 	struct env_node *next;
 } EnvNode;
 
-EnvNode	*create_env_node(const char *key, const char *value);
+EnvNode	*load_environment(char *envp[]);	//Basta calisacak
+char	**get_env_arr(EnvNode *head);		//guncel nodeleri **arr olarak dondurur.
+
 void	add_env_node(EnvNode **head, const char *key, const char *value);
-void	delete_env_node(EnvNode **head, const char *key);
 void	update_env_node(EnvNode *head, const char *key, const char *new_value);
-EnvNode	*load_environment(char *envp[]);
+void	delete_env_node(EnvNode **head, const char *key);
+
+EnvNode *create_env_node(const char *key, const char *value);
 void	free_list(EnvNode *head);
 void	print_list(EnvNode *head);
-
-
-
 
 
 

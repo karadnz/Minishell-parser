@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:49:54 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/03/31 16:06:35 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:24:47 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void delete_env_node(EnvNode **head, const char *key)
 	}
 }
 
-void update_env_node(EnvNode *head, const char *key, const char *new_value)
+void update_env_node(EnvNode *head, const char *key, const char *new_value) //update full
 {
 	EnvNode *current = head;
 
@@ -100,6 +100,7 @@ EnvNode *load_environment(char *envp[])
 	{
 		char *key = strtok(envp[i], "=");
 		char *value = strtok(NULL, "=");
+		char *full = envp[i];
 		add_env_node(&head, key, value);
 	}
 
@@ -131,6 +132,63 @@ void print_list(EnvNode *head)
 	}
 }
 
+char	*join_env(const char *key, const char *value) {
+    size_t klen = strlen(key);
+    size_t vlen = strlen(value);
+    size_t result_length = klen + vlen + 2;
+
+    char *result = (char*) malloc(result_length * sizeof(char));
+    if (!result) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
+
+    memcpy(result, key, klen);
+    result[klen] = '=';
+    memcpy(result + klen + 1, value, vlen + 1);
+
+    return result;
+}
+
+char	**get_env_arr(EnvNode *head)
+{
+	char	**rt;
+	int		size;
+	int		i;
+	EnvNode	*current;
+
+	current = head;
+	size = 0;
+	i = 0;
+	while (current != NULL)
+	{
+		size++;
+		current = current->next;
+	}
+	rt = (char **)malloc(sizeof(char *) * (size + 1));
+	current = head;
+	while (current != NULL)
+	{
+		rt[i] = join_env(current->key, current->value);
+		i++;
+		current = current->next;
+	}
+	rt[i] = strdup("\0");
+	return (rt);
+}
+
+void	printDoubleArr(char **arr)
+{
+	int	i;
+	
+	i = 0;
+	while(*arr[i])
+	{
+		printf("%s \n", arr[i]);
+		i++;
+	}
+}
+
 /*int main(int argc, char *argv[], char *envp[])
 {
 	EnvNode *env_list = load_environment(envp);
@@ -156,3 +214,34 @@ void print_list(EnvNode *head)
 	free_list(env_list);
 	return 0;
 }*/
+
+int main(int argc, char *argv[], char *envp[])
+{
+	EnvNode *env_list = load_environment(envp);
+
+	/*printf("Original environment variables:\n");
+	print_list(env_list);
+
+	// Add a new variable
+	add_env_node(&env_list, "NEW_VARIABLE", "new_value");
+	printf("\nAfter adding NEW_VARIABLE:\n");
+	print_list(env_list);
+
+	// Update an existing variable
+	update_env_node(env_list, "PATH", "/new/path");
+	printf("\nAfter updating PATH:\n");
+	print_list(env_list);
+
+	// Delete a variable
+	delete_env_node (&env_list, "NEW_VARIABLE");
+	printf("\nAfter deleting NEW_VARIABLE:\n");
+	print_list(env_list);*/
+
+	char **ar =get_env_arr(env_list);
+	printf("HIT \n\n\n");
+	printDoubleArr(ar);
+
+	free_list(env_list);
+	return 0;
+}
+
