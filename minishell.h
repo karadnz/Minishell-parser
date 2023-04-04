@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 17:32:59 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:29:42 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-//LEXER
+//---------LEXER-------------------------------------------//
 
-typedef enum
+
+typedef enum //delete quote
 {
 	TOKEN_PIPE,
 	TOKEN_LESS,
@@ -43,12 +44,18 @@ typedef struct
 	char		*value;
 }				Token;
 
-Token			*create_token(TokenType type, const char *value);
-void			free_token(Token *token);
-char			*read_word(const char **input);
-Token			*next_token(const char **input);
+Token	*get_next_token(const char **input);	//bunu kullan gec
 
-//PARSER
+Token	*generate_word_token(const char **input);	//word tokenler
+Token	*generate_pr_token(const char **input);		//pipe redirect tokenleri
+char	*create_word(const char **input, const char *start);
+Token	*create_token(TokenType type, const char **input, const char *start);
+void	free_token(Token *token);
+
+///////////////////////////////////////////////////////////////
+
+
+//---------PARSER-------------------------------------------//
 typedef enum
 {
 	NODE_NONE, //**
@@ -91,6 +98,8 @@ Node			*parse(const char *input);
 void			print_ast(Node *node, int depth);
 
 Node	*parse_main(const char **input);
+
+///////////////////////////////////////////////////////////////
 
 //EXPANDER
 

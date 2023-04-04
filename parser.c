@@ -6,23 +6,11 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 17:32:06 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 19:23:27 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*Node	*create_node2(NodeType type, const char *value)
-{
-	Node	*node;
-
-	node = (Node *)malloc(sizeof(Node));
-	node->type = type;
-	node->num_args = 0;
-	node->value = value;
-	node->next = NULL;
-	return (node);
-}*/
 
 Node	*create_node()
 {
@@ -76,25 +64,32 @@ void print_parser(Node *head)
 
 void expand_parsed_nodes(Node *head)
 {
-	Node *iter = head;
-
-	int i = 0;
+	int		i;
+	Node	*iter;
+	
+	iter = head;
+	i = 0;
 	while(iter != NULL)
 	{
-		for (int i = 0; i < iter->num_args; i++)
+		i = 0;
+		while (i < iter->num_args)
 		{
 			iter->args[i] = get_expanded(iter->args[i]);
+			i++;
 		}
-		for (int i = 0; i < iter->inf_count; i++)
+		i = 0;
+		while (i < iter->inf_count)
 		{
 			iter->infile[i] = get_expanded(iter->infile[i]);
+			i++;
 		}
-		for (int i = 0; i < iter->out_count; i++)
+		i = 0;
+		while (i < iter->out_count)
 		{
 			iter->outfile[i] = get_expanded(iter->outfile[i]);
+			i++;
 		}
 		iter=iter->next;
-		i++;
 	}
 }
 
@@ -106,7 +101,7 @@ Node	*parse_main(const char **input)
 
 	head = create_node();
 	iter = head;
-	token = next_token(input);
+	token = get_next_token(input);
 	while (token->type != TOKEN_EOF)
 	{
 		
@@ -129,7 +124,7 @@ Node	*parse_main(const char **input)
 		else if (token->type == TOKEN_GREATER)
 		{
 			iter->type = NODE_REDIRECT_OUT;
-			token = next_token(input);
+			token = get_next_token(input);
 			if (token->type == TOKEN_WORD)
 			{
 				iter->outfile = (char **)realloc(iter->outfile, (iter->out_count+ 1)
@@ -149,7 +144,7 @@ Node	*parse_main(const char **input)
 		else if (token->type == TOKEN_GREATER_GREATER)
 		{
 			iter->type = NODE_REDIRECT_APPEND;
-			token = next_token(input);
+			token = get_next_token(input);
 			if (token->type == TOKEN_WORD) //gordugun yerde olustur
 			{
 				iter->outfile = (char **)realloc(iter->outfile, (iter->out_count+ 1)
@@ -169,7 +164,7 @@ Node	*parse_main(const char **input)
 		else if (token->type == TOKEN_LESS)
 		{
 			iter->type = NODE_REDIRECT_IN;
-			token = next_token(input);
+			token = get_next_token(input);
 			if (token->type == TOKEN_WORD)
 			{
 				iter->infile = (char **)realloc(iter->infile, (iter->inf_count+ 1)
@@ -190,7 +185,7 @@ Node	*parse_main(const char **input)
 		else if (token->type == TOKEN_LESS_LESS)
 		{
 			iter->type = NODE_REDIRECT_HEREDOC;
-			token = next_token(input);
+			token = get_next_token(input);
 			if (token->type == TOKEN_WORD)
 			{				
 				iter->infile = (char **)realloc(iter->infile, (iter->inf_count+ 1)
@@ -207,7 +202,7 @@ Node	*parse_main(const char **input)
 			}
 			
 		}
-		token = next_token(input);
+		token = get_next_token(input);
 	}
 
 	return (head);
