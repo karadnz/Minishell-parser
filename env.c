@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:49:54 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 16:24:47 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:05:42 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ char	**get_env_arr(EnvNode *head)
 		i++;
 		current = current->next;
 	}
-	rt[i] = strdup("\0");
+	rt[i] = 0;
 	return (rt);
 }
 
@@ -182,7 +182,7 @@ void	printDoubleArr(char **arr)
 	int	i;
 	
 	i = 0;
-	while(*arr[i])
+	while(arr[i])
 	{
 		printf("%s \n", arr[i]);
 		i++;
