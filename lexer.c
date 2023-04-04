@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:08:53 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 21:49:52 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:58:53 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ Token	*get_next_token(const char **input)
 		(*input)++;
 	}
 	if (**input == '\0')
-		return (create_token(TOKEN_EOF, input, *input)); //NULL
+		return (create_token(TOKEN_EOF, input, *input));
 	if (**input == '<' || **input == '>' || **input == '|')
 		return (generate_pr_token(input));
 	return (generate_word_token(input));
@@ -36,8 +36,8 @@ Token	*generate_word_token(const char **input)
 	df = false;
 	while (**input)
 	{
-		if (!(sf || df) && ( strchr("<>|", **input) || isspace(**input) ) ) //quote icinde degilsen ayir
-			break;
+		if (!(sf || df) && (strchr("<>|", **input) || isspace(**input)))
+			break ;
 		if (**input == '"' && !sf)
 			df = !df;
 		if (**input == '\'' && !df)
