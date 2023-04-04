@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 23:29:55 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 23:49:56 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void			parse_output(Node *iter, Token *token, const char **input);
 
 Node			*create_node();
 void			print_parser(Node *head);
-void			expand_parsed_nodes(Node *head);
 
 
 
@@ -91,8 +90,9 @@ void			expand_parsed_nodes(Node *head);
 
 //EXPANDER
 
-
+void	expand_parsed_nodes(Node *head);
 char *get_expanded(const char *input);
+
 
 
 //PROMPT
@@ -129,6 +129,7 @@ void	print_list(EnvNode *head);
 
 void *ft_realloc(void *ptr, size_t old_size, size_t new_size); //duzelt
 void printDoubleArr(char **arr);
+void	null_terminate_arrs(Node *iter);
 
 
 

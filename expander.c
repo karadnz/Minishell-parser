@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:29:45 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 17:27:07 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/04 23:49:09 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,37 @@ char *get_expanded(const char *input)
 
 	expanded[write_index] = '\0';
 	return expanded;
+}
+
+void	expand_parsed_nodes(Node *head)
+{
+	int		i;
+	Node	*iter;
+
+	iter = head;
+	i = 0;
+	while (iter != NULL)
+	{
+		i = 0;
+		while (i < iter->arg_count)
+		{
+			iter->args[i] = get_expanded(iter->args[i]);
+			i++;
+		}
+		i = 0;
+		while (i < iter->inf_count)
+		{
+			iter->infile[i] = get_expanded(iter->infile[i]);
+			i++;
+		}
+		i = 0;
+		while (i < iter->out_count)
+		{
+			iter->outfile[i] = get_expanded(iter->outfile[i]);
+			i++;
+		}
+		iter = iter->next;
+	}
 }
 
 /*int main()
