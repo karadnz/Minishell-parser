@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:08:53 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 23:55:54 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 00:04:02 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ Token	*generate_pr_token(const char **input)
 	}
 	if (**input == '<')
 	{
-		printf("Iside in \n");
 		(*input)++;
 		if (**input == '<')
 		{
@@ -67,7 +66,6 @@ Token	*generate_pr_token(const char **input)
 	}
 	if (**input == '>')
 	{
-		printf("Iside out \n");
 		(*input)++;
 		if (**input == '>')
 		{

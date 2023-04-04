@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:29:45 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 23:49:09 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 01:19:21 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char *get_expanded(const char *input)
 			{
 				size_t var_value_len = strlen(var_value);
 				expanded_len += var_value_len - (1 + var_len);
+				printf("%s %s %d \n\n\n\n", var_name, var_value, strlen(var_value) - var_len);
 				expanded = (char *)realloc(expanded, expanded_len + 1);
 
 				strcpy(expanded + write_index, var_value);

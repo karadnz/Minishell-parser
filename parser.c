@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 00:00:42 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 00:03:53 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	parse_word(Node *iter, Token *token)
 
 void	parse_input(Node *iter, Token *token, const char **input)
 {
-	printf("Iside in \n");
 	token = get_next_token(input);
 	if (token->type == TOKEN_WORD)
 	{
@@ -81,7 +80,6 @@ void	parse_input(Node *iter, Token *token, const char **input)
 
 void	parse_output(Node *iter, Token *token, const char **input)
 {
-	printf("Iside out \n");
 	token = get_next_token(input);
 	if (token->type == TOKEN_WORD)
 	{

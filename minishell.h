@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/04 23:49:56 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 02:00:43 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,31 @@ void			print_parser(Node *head);
 
 //EXPANDER
 
-void	expand_parsed_nodes(Node *head);
-char *get_expanded(const char *input);
+typedef struct exp_stsh
+{
+	int		src_i;
+	int		rt_i;
+
+	int		src_len;
+	int		rt_len;
+
+	char	*rt;
+	
+} exp_stsh;
+
+void		expand_parsed_nodes(Node *head);
+char		*get_expanded(const char *input);
+void		dollarize(const char *str, exp_stsh *stsh);
+void		expand_stsh(const char *str, exp_stsh *stsh, bool sf, bool df);
+exp_stsh	*get_stsh(const char *str);
 
 
 
 //PROMPT
 
-void	print_prompt();
-int		takeInput(char** str);
+void		print_prompt();
+int			takeInput(char** str);
+
 
 //ENV
 
