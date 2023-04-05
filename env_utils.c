@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 03:03:38 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 04:21:42 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 05:18:14 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ EnvNode	*find_env_node(EnvNode *head, const char *key)
 	return (NULL);
 }
 
-void	free_list(EnvNode *head)
+void	free_env_list(EnvNode *head)
 {
 	EnvNode	*current;
 	EnvNode	*next;

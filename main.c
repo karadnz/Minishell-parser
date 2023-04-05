@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:09:19 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 04:47:13 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 05:45:33 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,26 @@ int	main(int argc, char **argv, char **envp)
 	env_list = load_environment(envp);
 	printf("Original environment variables:\n");
 	print_list(env_list);
+	head = NULL;
 	while (1)
 	{
 		print_prompt();
 		if (take_input(&input))
 		{
-			printf("\n\nOriginal environment variables:\n");
+			/*printf("\n\nOriginal environment variables:\n");
 			print_list(env_list);
-			printf("\n\n\n\n\n");
+			printf("\n\n\n\n\n");*/
+			system("leaks a.out");
 			continue ;
 		}
 		head = get_parsed((const char **)&input);
 		print_parser(head);
 		expand_parsed_nodes(head);
 		print_parser_with_token(head);
+		free_nodes(head);
+		//system("leaks a.out");
+		//return 0;
+		//free(input);
 	}
 	return (0);
 }

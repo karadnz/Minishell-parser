@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:09:21 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 04:27:35 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 05:25:10 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,39 @@ void	free_token(Token *token)
 	if (token->value)
 		free(token->value);
 	free(token);
+}
+
+void	free_nodes(Node *head)
+{
+	Node	*iter;
+	Node	*next;
+	int		j;
+
+	iter = head;
+	while (iter != NULL)
+	{
+		next = iter->next;
+		j = -1;
+		while (++j < iter->arg_count)
+			free(iter->args[j]);
+		free(iter->args);
+		j = -1;
+		while (++j < iter->inf_count)
+		{
+			free(iter->s_infile[j]->name);
+			free(iter->s_infile[j]);
+		}
+		free(iter->s_infile);
+		j = -1;
+		while (++j < iter->out_count)
+		{
+			free(iter->s_outfile[j]->name);
+			free(iter->s_outfile[j]);
+		}
+		free(iter->s_outfile);
+		free(iter);
+		iter = next;
+	}
+		
+		
 }

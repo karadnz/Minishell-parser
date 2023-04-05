@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:29:45 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 04:19:18 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 05:40:02 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*get_expanded(const char *str)
 	sf = false;
 	df = false;
 	expand_stsh(str, stsh, sf, df);
+	free((char *)str);
+	free(stsh);
 	return (stsh->rt);
 }
 
@@ -68,6 +70,7 @@ void	ft_dollarize(const char *str, exp_stsh *stsh)
 	strncpy(var_name, str + var_start, var_len);
 	var_name[var_len] = '\0';
 	var_val = get_env_val(var_name);
+	free(var_name);
 	if (var_val)
 	{
 		stsh->rt_len += strlen(var_val) - (1 + var_len);

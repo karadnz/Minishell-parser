@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 04:46:57 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 05:24:54 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	delete_env_node(EnvNode **head, const char *key); //sil
 EnvNode	*find_env_node(EnvNode *head, const char *key);
 
 EnvNode *create_env_node(const char *key, const char *value);
-void	free_list(EnvNode *head);
+void	free_env_list(EnvNode *head);
 void	print_list(EnvNode *head);
 char	*join_env(const char *key, const char *value);
 
@@ -148,6 +148,8 @@ char	*join_env(const char *key, const char *value);
 void *ft_realloc(void *ptr, size_t old_size, size_t new_size); //zortlak
 void printDoubleArr(char **arr);
 void	null_terminate_arrs(Node *iter);
+void	free_env_list(EnvNode *head);
+void	free_nodes(Node *head);
 
 
 //PROMPT
