@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:09:19 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 02:39:14 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 04:47:13 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		head = get_parsed((const char **)&input);
 		print_parser(head);
 		expand_parsed_nodes(head);
-		print_parser(head);
+		print_parser_with_token(head);
 	}
 	return (0);
 }

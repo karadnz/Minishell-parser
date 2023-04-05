@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 04:26:07 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 04:46:57 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ void	free_token(Token *token);
 ///////////////////////////////////////////////////////////////
 
 //---------PARSER-------------------------------------------//
+
+typedef struct t_file //DENEYSEL
+{
+	TokenType		type;
+	char			*name;
+}				s_file;
+
 typedef struct Node //append heredoc belirteci eklenecek
 {
 	char		**args;
@@ -59,6 +66,9 @@ typedef struct Node //append heredoc belirteci eklenecek
 	
 	char		**infile;
 	char		**outfile;
+	
+	s_file		**s_infile;
+	s_file		**s_outfile;
 	
 	int			inf_count;
 	int			out_count;
@@ -144,6 +154,11 @@ void	null_terminate_arrs(Node *iter);
 
 void		print_prompt();
 int			take_input(char** str);
+
+//DEBUG
+
+void	print_parser_with_token(Node *head);
+void	print_parser(Node *head);
 
 
 #endif
