@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 02:00:43 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 03:05:56 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,16 +129,18 @@ EnvNode *env_list; //GLOBAL
 
 EnvNode	*load_environment(char *envp[]);	//Basta calisacak
 char	**get_env_arr(EnvNode *head);		//guncel nodeleri **arr olarak dondurur.
+char	*get_env_val(const char *key);		//key ver value gelsin woaw
 
 void	add_env_node(EnvNode **head, const char *key, const char *value);
 void	update_env_node(EnvNode *head, const char *key, const char *new_value);
 void	delete_env_node(EnvNode **head, const char *key);
-char	*get_env_val(const char *key);
+
 EnvNode	*find_env_node(EnvNode *head, const char *key);
 
 EnvNode *create_env_node(const char *key, const char *value);
 void	free_list(EnvNode *head);
 void	print_list(EnvNode *head);
+char	*join_env(const char *key, const char *value);
 
 
 //utils

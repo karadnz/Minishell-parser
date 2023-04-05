@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static char *get_abs_path(char *path, char *cmd)
+static char	*get_abs_path(char *path, char *cmd)
 {
 	char	*cmd_w_path;
 	char	*tmp;
@@ -64,7 +64,7 @@ static char	*find_command(char *cmd)
 	return (NULL);
 }
 
-int		execute_cmd(char *cmd_w_paths, Node *commands)
+int	execute_cmd(char *cmd_w_paths, Node *commands)
 {
 	pid_t	pid;
 	int		status;
