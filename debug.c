@@ -6,11 +6,13 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 22:00:58 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 03:13:17 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 04:19:59 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//printler burda
 
 void	print_list(EnvNode *head)
 {
@@ -53,12 +55,13 @@ void	print_parser(Node *head)
 		printf("\ninfile: ");
 		j = -1;
 		while (++j < iter->inf_count)
-			printf("%s , ", iter->infile[i]);
+			printf("%s , ", iter->infile[j]);
 		printf("\noutfile: ");
 		j = -1;
 		while (++j < iter->out_count)
-			printf("%s , ", iter->outfile[i]);
+			printf("%s , ", iter->outfile[j]);
 		iter = iter->next;
 		i++;
 	}
+	printf("\n\n");
 }

@@ -6,11 +6,13 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 03:03:38 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 03:07:39 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 04:21:42 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//list fonskitonlari
 
 EnvNode	*create_env_node(const char *key, const char *value)
 {

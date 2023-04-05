@@ -6,11 +6,17 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 15:49:54 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 03:05:32 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 04:21:08 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//bir kez load calistirilacak
+//value almak icin get_env_val
+//array oalrak alamk icin get env arr
+//update delete zart zort
+//eklenirken basa eklenir
 
 EnvNode	*load_environment(char *envp[])
 {

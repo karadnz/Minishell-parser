@@ -6,11 +6,15 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:08:53 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 00:04:02 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 04:27:29 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//pipe veya redirect gorurse tokeni olusturur
+//eger word olusacaksa tirnaklar icinde olmayan bir
+//ayirac gorene kadar devam eder
 
 Token	*get_next_token(const char **input)
 {
@@ -96,11 +100,4 @@ Token	*create_token(TokenType type, const char **input, const char *start)
 	token->type = type;
 	token->value = create_word(input, start);
 	return (token);
-}
-
-void	free_token(Token *token)
-{
-	if (token->value)
-		free(token->value);
-	free(token);
 }

@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander2.c                                        :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:29:45 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 02:24:59 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 04:19:18 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//norm yuzunden hersey stash structinda
+//bu calismadan load_enviroment() cagrilmis olmali
+//gereken yerlerdeki tirnaklari kaldirir
+//gereken yerdeki dolarlari acar
+//expand_parsed_nodes()
 
 char	*get_expanded(const char *str)
 {
@@ -34,7 +40,7 @@ void	expand_stsh(const char *str, exp_stsh *stsh, bool sf, bool df)
 		else if (str[stsh->src_i] == '\'' && !df)
 			sf = !sf;
 		else if (str[stsh->src_i] == '$' && !sf)
-			dollarize(str, stsh);
+			ft_dollarize(str, stsh);
 		else
 		{
 			stsh->rt[stsh->rt_i++] = str[stsh->src_i];
@@ -44,7 +50,7 @@ void	expand_stsh(const char *str, exp_stsh *stsh, bool sf, bool df)
 	stsh->rt[stsh->rt_i] = '\0';
 }
 
-void	dollarize(const char *str, exp_stsh *stsh)
+void	ft_dollarize(const char *str, exp_stsh *stsh)
 {
 	int		var_start;
 	int		var_len;

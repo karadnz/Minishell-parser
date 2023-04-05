@@ -6,26 +6,15 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 00:03:53 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 04:16:28 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-Node	*create_node(void)
-{
-	Node	*node;
-
-	node = (Node *)malloc(sizeof(Node));
-	node->arg_count = 0;
-	node->inf_count = 0;
-	node->out_count = 0;
-	node->args = NULL;
-	node->outfile = NULL;
-	node->infile = NULL;
-	node->next = NULL;
-	return (node);
-}
+//input parslanip geri verilir
+//yeni bir node sadece pipe varsa olusur
+//arrayler pipe gorunce null terminatelenir *** 
 
 Node	*get_parsed(const char **input)
 {
@@ -54,6 +43,21 @@ Node	*get_parsed(const char **input)
 	}
 	iter->next = NULL;
 	return (head);
+}
+
+Node	*create_node(void)
+{
+	Node	*node;
+
+	node = (Node *)malloc(sizeof(Node));
+	node->arg_count = 0;
+	node->inf_count = 0;
+	node->out_count = 0;
+	node->args = NULL;
+	node->outfile = NULL;
+	node->infile = NULL;
+	node->next = NULL;
+	return (node);
 }
 
 void	parse_word(Node *iter, Token *token)
