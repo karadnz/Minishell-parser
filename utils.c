@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:09:21 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 05:25:10 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:48:52 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,18 @@ void	null_terminate_arrs(Node *iter)
 	iter->outfile[iter->out_count] = 0;
 }
 
-void	free_token(Token *token)
+//to prevent double free
+void	free_token(Token **token)
 {
-	if (token->value)
-		free(token->value);
-	free(token);
+	if (!(token))
+	{
+		printf("HIT \n\n\n\n\n\n");
+		return ;
+	}
+	if ((*token)->value)
+		free((*token)->value);
+	free(*token);
+	*token = 0;
 }
 
 void	free_nodes(Node *head)

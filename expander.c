@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:29:45 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 05:40:02 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:24:26 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@ char	*get_expanded(const char *str)
 	exp_stsh	*stsh;
 	bool		sf;
 	bool		df;
+	char		*rt;
 
 	stsh = get_stsh(str);
 	sf = false;
 	df = false;
 	expand_stsh(str, stsh, sf, df);
 	free((char *)str);
+	rt = stsh->rt;
 	free(stsh);
-	return (stsh->rt);
+	return (rt);
 }
 
 void	expand_stsh(const char *str, exp_stsh *stsh, bool sf, bool df)

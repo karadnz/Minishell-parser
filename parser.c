@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 05:41:44 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:57:56 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ Node	*get_parsed(const char **input)
 			parse_input(iter, token, input);
 		else if (token->type == TOKEN_O || token->type == TOKEN_O_O)
 			parse_output(iter, token, input);
-		free_token(token);
+		free_token(&token);
 		token = get_next_token(input);
 	}
 	iter->next = NULL;
+    free_token(&token);
 	return (head);
 }
 
@@ -76,7 +77,7 @@ void	parse_input(Node *iter, Token *token, const char **input)
 	TokenType	type;
 
 	type = token->type;
-	free_token(token);
+	free_token(&token);
 	token = get_next_token(input);
 	if (token->type == TOKEN_WORD)
 	{
@@ -92,6 +93,7 @@ void	parse_input(Node *iter, Token *token, const char **input)
 	}
 	else
 		printf("INVALID SYNTAX \n");
+    //free_token(&token);
 }
 
 void	parse_output(Node *iter, Token *token, const char **input)
@@ -99,7 +101,7 @@ void	parse_output(Node *iter, Token *token, const char **input)
 	TokenType	type;
 
 	type = token->type;
-	free_token(token);
+	free_token(&token);
 	token = get_next_token(input);
 	if (token->type == TOKEN_WORD)
 	{
@@ -115,4 +117,5 @@ void	parse_output(Node *iter, Token *token, const char **input)
 	}
 	else
 		printf("INVALID SYNTAX \n");
+    //free_token(&token);
 }

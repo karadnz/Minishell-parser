@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 05:24:54 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:45:30 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ Token	*generate_word_token(const char **input);	//word tokenler
 Token	*generate_pr_token(const char **input);		//pipe redirect tokenleri
 char	*create_word(const char **input, const char *start);
 Token	*create_token(TokenType type, const char **input, const char *start);
-void	free_token(Token *token);
+void	free_token(Token **token);
 
 ///////////////////////////////////////////////////////////////
 
