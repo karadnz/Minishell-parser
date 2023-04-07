@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:29:45 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/07 15:22:00 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:05:26 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,12 @@ void	expand_parsed_nodes(Node *head)
 		i = -1;
 		while (++i < iter->out_count)
 			iter->outfile[i] = get_expanded(iter->outfile[i]);
+		i = -1;
+		while (++i < iter->inf_count)
+			iter->s_infile[i]->name = get_expanded(iter->s_infile[i]->name);
+		i = -1;
+		while (++i < iter->out_count)
+			iter->s_outfile[i]->name = get_expanded(iter->s_outfile[i]->name);
 		iter = iter->next;
 	}
 }

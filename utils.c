@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:09:21 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/07 15:16:29 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:08:08 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,18 @@ void	free_nodes(Node *head)
 			free(iter->s_outfile[j]->name);
 			free(iter->s_outfile[j]);
 		}
-		free(iter->s_outfile);
+		j = -1;
+		while (++j < iter->inf_count)
+		{
+			free(iter->infile[j]);
+		}
+		free(iter->infile);
+		j = -1;
+		while (++j < iter->out_count)
+		{
+			free(iter->outfile[j]);
+		}
+		free(iter->outfile);
 		free(iter);
 		iter = next;
 	}
