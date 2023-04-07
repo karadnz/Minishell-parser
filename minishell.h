@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:04:51 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 16:45:30 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:16:52 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,8 @@ char	*join_env(const char *key, const char *value);
 
 //utils
 
-void *ft_realloc(void *ptr, size_t old_size, size_t new_size); //zortlak
-void printDoubleArr(char **arr);
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size); //zortlak
+void	printDoubleArr(char **arr);
 void	null_terminate_arrs(Node *iter);
 void	free_env_list(EnvNode *head);
 void	free_nodes(Node *head);

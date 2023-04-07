@@ -6,11 +6,24 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:09:21 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 16:48:52 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:16:29 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+void *ft_realloc(void *ptr, size_t old_size, size_t new_size) //size_t in bytes
+{
+    void	*rt;
+    int		msize;
+	
+    msize = old_size;
+    rt = malloc(new_size);
+    rt = memcpy(rt, ptr, msize);
+    free(ptr);
+    return	(rt);
+}
 
 void	null_terminate_arrs(Node *iter)
 {

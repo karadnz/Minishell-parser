@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:29:45 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 16:24:26 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:22:00 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_dollarize(const char *str, exp_stsh *stsh)
 	if (var_val)
 	{
 		stsh->rt_len += strlen(var_val) - (1 + var_len);
-		stsh->rt = (char *)realloc(stsh->rt, stsh->rt_len + 1);
+		stsh->rt = (char *)ft_realloc(stsh->rt, stsh->rt_len, stsh->rt_len + 1);
 		strcpy(stsh->rt + stsh->rt_i, var_val);
 		stsh->rt_i += strlen(var_val);
 	}
