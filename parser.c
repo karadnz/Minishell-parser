@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 20:06:57 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/07 15:19:34 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:26:09 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ Node	*get_parsed(const char **input)
 		token = get_next_token(input);
 	}
 	iter->next = NULL;
-    free_token(&token);
+	free_token(&token);
 	return (head);
 }
 
@@ -56,18 +56,16 @@ Node	*create_node(void)
 	node->inf_count = 0;
 	node->out_count = 0;
 	node->args = NULL;
+	node->next = NULL;
 	node->outfile = NULL;
 	node->infile = NULL;
-	node->next = NULL;
-	node->s_outfile = NULL;
-	node->s_infile = NULL;
 	return (node);
 }
 
 void	parse_word(Node *iter, Token *token)
 {
 	iter->args = (char **)ft_realloc(iter->args,
-			(iter->arg_count) * sizeof(char *), (iter->arg_count + 1) * sizeof(char *));
+			(iter->arg_count), sizeof(char *));
 	iter->args[iter->arg_count] = strdup(token->value);
 	iter->arg_count++;
 }
@@ -81,19 +79,15 @@ void	parse_input(Node *iter, Token *token, const char **input)
 	token = get_next_token(input);
 	if (token->type == TOKEN_WORD)
 	{
-		iter->infile = (char **)ft_realloc(iter->infile,
-				(iter->inf_count) * sizeof(char *), (iter->inf_count + 1) * sizeof(char *));
-		iter->infile[iter->inf_count] = strdup(token->value);
-		iter->s_infile = (s_file **)ft_realloc(iter->s_infile,
-				(iter->inf_count) * sizeof(s_file *), (iter->inf_count + 1) * sizeof(s_file *));
-		iter->s_infile[iter->inf_count] = (s_file *)malloc(sizeof(s_file));
-		iter->s_infile[iter->inf_count]->name = strdup(token->value);
-		iter->s_infile[iter->inf_count]->type = type;
+		iter->infile = (s_file **)ft_realloc(iter->infile,
+				(iter->inf_count), sizeof(s_file *));
+		iter->infile[iter->inf_count] = (s_file *)malloc(sizeof(s_file));
+		iter->infile[iter->inf_count]->name = strdup(token->value);
+		iter->infile[iter->inf_count]->type = type;
 		iter->inf_count++;
 	}
 	else
 		printf("INVALID SYNTAX \n");
-    //free_token(&token);
 }
 
 void	parse_output(Node *iter, Token *token, const char **input)
@@ -105,17 +99,13 @@ void	parse_output(Node *iter, Token *token, const char **input)
 	token = get_next_token(input);
 	if (token->type == TOKEN_WORD)
 	{
-		iter->outfile = (char **)ft_realloc(iter->outfile,
-				(iter->out_count) * sizeof(char *),(iter->out_count + 1) * sizeof(char *));
-		iter->outfile[iter->out_count] = strdup(token->value);
-		iter->s_outfile = (s_file **)ft_realloc(iter->s_outfile,
-				(iter->out_count) * sizeof(s_file *),(iter->out_count + 1) * sizeof(s_file *));
-		iter->s_outfile[iter->out_count] = (s_file *)malloc(sizeof(s_file));
-		iter->s_outfile[iter->out_count]->name = strdup(token->value);
-		iter->s_outfile[iter->out_count]->type = type;
+		iter->outfile = (s_file **)ft_realloc(iter->outfile,
+				(iter->out_count), sizeof(s_file *));
+		iter->outfile[iter->out_count] = (s_file *)malloc(sizeof(s_file));
+		iter->outfile[iter->out_count]->name = strdup(token->value);
+		iter->outfile[iter->out_count]->type = type;
 		iter->out_count++;
 	}
 	else
 		printf("INVALID SYNTAX \n");
-    //free_token(&token);
 }

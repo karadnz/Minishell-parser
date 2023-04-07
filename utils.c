@@ -6,33 +6,33 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:09:21 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/07 16:08:08 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/07 17:36:37 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-void *ft_realloc(void *ptr, size_t old_size, size_t new_size) //size_t in bytes
+//bir fazla bsize kadar yer ayirir
+void	*ft_realloc(void *ptr, size_t b_amount, size_t b_size)
 {
-    void	*rt;
-    int		msize;
-	
-    msize = old_size;
-    rt = malloc(new_size);
-    rt = memcpy(rt, ptr, msize);
-    free(ptr);
-    return	(rt);
+	void	*rt;
+	int		msize;
+
+	msize = b_amount * b_size;
+	rt = malloc((b_amount + 1) * b_size);
+	rt = memcpy(rt, ptr, msize);
+	free(ptr);
+	return (rt);
 }
 
 void	null_terminate_arrs(Node *iter)
 {
 	iter->args = (char **)realloc(iter->args,
 			(iter->arg_count + 1) * sizeof(char *));
-	iter->infile = (char **)realloc(iter->infile,
-			(iter->inf_count + 1) * sizeof(char *));
-	iter->outfile = (char **)realloc(iter->outfile,
-			(iter->out_count + 1) * sizeof(char *));
+	iter->infile = (s_file **)ft_realloc(iter->infile,
+			(iter->inf_count), sizeof(s_file *));
+	iter->outfile = (s_file **)ft_realloc(iter->outfile,
+			(iter->out_count), sizeof(s_file *));
 	iter->args[iter->arg_count] = 0;
 	iter->infile[iter->inf_count] = 0;
 	iter->outfile[iter->out_count] = 0;
@@ -69,31 +69,18 @@ void	free_nodes(Node *head)
 		j = -1;
 		while (++j < iter->inf_count)
 		{
-			free(iter->s_infile[j]->name);
-			free(iter->s_infile[j]);
-		}
-		free(iter->s_infile);
-		j = -1;
-		while (++j < iter->out_count)
-		{
-			free(iter->s_outfile[j]->name);
-			free(iter->s_outfile[j]);
-		}
-		j = -1;
-		while (++j < iter->inf_count)
-		{
+			free(iter->infile[j]->name);
 			free(iter->infile[j]);
 		}
 		free(iter->infile);
 		j = -1;
 		while (++j < iter->out_count)
 		{
+			free(iter->outfile[j]->name);
 			free(iter->outfile[j]);
 		}
 		free(iter->outfile);
 		free(iter);
 		iter = next;
 	}
-		
-		
 }

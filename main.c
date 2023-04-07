@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 16:09:19 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/07 16:02:34 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/07 17:21:59 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		print_prompt();
-		if (take_input(&input))
+		if (take_input(&input)) //bos input da leaks calisiyor
 		{
-			/*printf("\n\nOriginal environment variables:\n");
-			print_list(env_list);
-			printf("\n\n\n\n\n");*/
+			//printf("\n\nOriginal environment variables:\n");
+			//print_list(env_list);
+			//printf("\n\n\n\n\n");
 			system("leaks a.out");
 			continue ;
 		}

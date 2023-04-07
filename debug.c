@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 22:00:58 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/05 04:46:22 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:15:21 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,6 @@ void	print_parser(Node *head)
 		while (++j < iter->arg_count)
 			printf("%s , ", iter->args[j]);
 		printf("\ninfile: ");
-		j = -1;
-		while (++j < iter->inf_count)
-			printf("%s , ", iter->infile[j]);
-		printf("\noutfile: ");
-		j = -1;
-		while (++j < iter->out_count)
-			printf("%s , ", iter->outfile[j]);
 		iter = iter->next;
 		i++;
 	}
@@ -83,11 +76,11 @@ void	print_parser_with_token(Node *head)
 		printf("\ninfile: ");
 		j = -1;
 		while (++j < iter->inf_count)
-			printf("%d %s , ", iter->s_infile[j]->type, iter->s_infile[j]->name);
+			printf("%d %s , ", iter->infile[j]->type, iter->infile[j]->name);
 		printf("\noutfile: ");
 		j = -1;
 		while (++j < iter->out_count)
-			printf("%d %s , ", iter->s_outfile[j]->type, iter->s_outfile[j]->name);
+			printf("%d %s , ", iter->outfile[j]->type, iter->outfile[j]->name);
 		iter = iter->next;
 		i++;
 	}

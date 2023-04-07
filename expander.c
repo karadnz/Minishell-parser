@@ -6,7 +6,7 @@
 /*   By: mkaraden <mkaraden@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 16:29:45 by mkaraden          #+#    #+#             */
-/*   Updated: 2023/04/07 16:05:26 by mkaraden         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:39:47 by mkaraden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_dollarize(const char *str, exp_stsh *stsh)
 	if (var_val)
 	{
 		stsh->rt_len += strlen(var_val) - (1 + var_len);
-		stsh->rt = (char *)ft_realloc(stsh->rt, stsh->rt_len, stsh->rt_len + 1);
+		stsh->rt = (char *)ft_realloc(stsh->rt, stsh->rt_len, sizeof(char));
 		strcpy(stsh->rt + stsh->rt_i, var_val);
 		stsh->rt_i += strlen(var_val);
 	}
@@ -109,16 +109,10 @@ void	expand_parsed_nodes(Node *head)
 			iter->args[i] = get_expanded(iter->args[i]);
 		i = -1;
 		while (++i < iter->inf_count)
-			iter->infile[i] = get_expanded(iter->infile[i]);
+			iter->infile[i]->name = get_expanded(iter->infile[i]->name);
 		i = -1;
 		while (++i < iter->out_count)
-			iter->outfile[i] = get_expanded(iter->outfile[i]);
-		i = -1;
-		while (++i < iter->inf_count)
-			iter->s_infile[i]->name = get_expanded(iter->s_infile[i]->name);
-		i = -1;
-		while (++i < iter->out_count)
-			iter->s_outfile[i]->name = get_expanded(iter->s_outfile[i]->name);
+			iter->outfile[i]->name = get_expanded(iter->outfile[i]->name);
 		iter = iter->next;
 	}
 }
